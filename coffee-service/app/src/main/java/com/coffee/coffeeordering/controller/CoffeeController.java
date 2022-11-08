@@ -47,6 +47,9 @@ public class CoffeeController {
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void updateCoffee(@PathVariable Long id, @RequestBody Coffee coffee) {
         // maybe add a check that the id does not conflict with coffee.getId()
+        if (coffee.getId().equals(id) == false) {
+            throw new IllegalArgumentException("Request body and path variable indicate different ids. Path variable: " + id +"; Request body: " + coffee.getId());
+        }
         coffee.setId(id);
         coffeeRepository.save(coffee);
     }
